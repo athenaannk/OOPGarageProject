@@ -49,10 +49,10 @@ class Garage:
 #append the garage code to key index. need index for added cars and removed cars
         for index, i in enumerate(self.cars_added):
                 self.car_info['code'].append(self.ticket[index])
-                self.car_info['license plate'].append(i[0])
-                self.car_info['make'].append(i[1])
-                self.car_info['model'].append(i[2])
-                self.car_info['color'].append(i[3])
+                self.car_info['license plate'].append([0])
+                self.car_info['make'].append([1])
+                self.car_info['model'].append([2])
+                self.car_info['color'].append([3])
                 return "Please take your ticket and enter the garage."
         
     def remove_car(self, garage_code, pay):
@@ -79,5 +79,21 @@ class Garage:
             if pay == 'Yes':
                print("Your total is $5. Thank you for your payment. You have 15 minutes to exit the garage.")
             else:
-                 print("Feel free to stay as long as you'd like!")
+                print("Feel free to stay as long as you'd like!")
+        
 
+ # displayes all cars in garage
+    def cars_in_garage(self):
+            for i in self.car_info.items():
+                print(i)
+
+
+
+our_garage = Garage()
+print(our_garage.spots_available())
+our_garage.add_car(Car('BG789', 'Civic', 'Honda', 'Black'))
+our_garage.add_car(Car('TG908', 'Camry', 'Toyota', 'Blue'))
+our_garage.add_car(Car('YN987', 'Wrangler' ,'Jeep', 'White'))
+our_garage.cars_in_garage()
+print(our_garage.remove_car('S1', 'S5'))
+print(our_garage.spots_available())
