@@ -16,86 +16,69 @@
 # tickets >> LIST     parking spaces >> LIST     current ticket >> DICTIONARY
 
 
-class Car:
-    def __init__(self, license_plate, make, model, color):
-        self.license_plate = license_plate
-        self.make = make
-        self.model = model
-        self.color = color
-
-
 class Garage:
     def __init__(self):
-        self.cars_added = []
+        self.tickets = 5
         self.spots = 5
-        self.ticket_info = {}
-        self.pay = 5
+        self.activeTicket = {"paid": False}
 
-    def spots_available(self):
-        return self.spots
+# car enters, takes ticket, one less ticket, one less spot
 
-# The split() method splits a string into a list.
-# Dictionary to store car info
-# list available spots subtract one available spot
+    def newTicket(self):
+        print("Please remember to take your ticket and please enter the garage.")
+        self.tickets -= 1
+        print(f"There are {self.tickets} tickets available in this garage.")
+        self.spots -= 1
+        print(
+            f"There are {self.spots} parking spaces available in this garage.")
 
-    def add_car(self, car):
-        self.ticket = ['S1', 'S2', 'S3', 'S4', 'S5']
 
-        if self.spots > 0:
-            self.cars_added.append(str(car).split(', '))
-            self.spots -= 1
-            self.car_info = {'code': [], 'license plate': [],
-                             'make': [], 'model': [], 'color': []}
+# pay ticket
 
-# Enumerate() method adds a counter to an iterable and returns it in a form of enumerating object.
-# append the garage code to key index. need index for added cars and removed cars
-            for index, i in enumerate(self.cars_added):
-                self.car_info['code'].append(self.ticket[index])
-                self.car_info['license plate'].append(i[0])
-                self.car_info['make'].append(i[1])
-                self.car_info['model'].append(i[2])
-                self.car_info['color'].append(i[3])
-            return "Please take your ticket and enter the garage."
-
-    def remove_car(self, garage_code, pay):
-        past_len = len(self.car_info['code'])
-
-        for index, value in enumerate(self.car_info['code']):
-            if value == garage_code:
-                print("license plate:", self.car_info['license plate'][index])
-                print("make:", self.car_info['make'][index])
-                print("model:", self.car_info['model'][index])
-                print(" color:", self.car_info['color'][index])
-
-                removed_car_index = self.car_info['code'].pop(index)
-                self.car_info['license plate'].pop(index)
-                self.car_info['make'].pop(index)
-                self.car_info['model'].pop(index)
-                self.car_info['color'].pop(index)
-                self.spots += 1
-# removed car allows another spot to become available
-
-# removed car count has to be greater than cars currently parked if the length of current car is less than the past length
-        if len(self.car_info['code']) < past_len:
-            pay = input(
-                "Are you read to pay and exit the garage? 'Yes' or 'No'")
-            if pay == 'Yes':
+    def pay(self):
+        while True:
+            payment = int(input("Please insert $100 and type 100 to confirm."))
+            if payment == 100:  # parking is 10 dollars
                 print(
-                    "Your total is $5. Thank you for your payment. You have 15 minutes to exit the garage.")
+                    "Your payment has been accepted. You have 15 minutes to leave or payment will triple. You will be taken back to the main menu now.")
+                self.activeTicket["paid"] = True
+                break
             else:
-                print("Feel free to stay as long as you'd like!")
+                print("SHOW ME THE MONEY!")
 
- # displayes all cars in garage
+# leave garage
+    def exitGarage(self):
+        if self.activeTicket["paid"] == True:
+            print("Thank you, have a nice day!")
+            self.tickets += 1
+            print(
+                f"There are {self.tickets} tickets available in this garage.")
+            self.spots += 1
+            print(
+                f"There are {self.spots} parking spaces available in this garage.")
 
-    def cars_in_garage(self):
-        for i in self.car_info.items():
-            print(i)
+        else:
+            while True:
+                exiting = int(input("You still owe $100. Insert $100 and type 100 to confirm."))
+                if exiting == 100:
+                    print("Thank you, have a nice day!")
+                    break
+                else:
+                    print("You did not show me the money. You live here now.")
 
 
-our_garage = Garage()
-print(our_garage.spots_available())
-our_garage.add_car(Car('BG789', 'Civic', 'Honda', 'Black'))
-our_garage.add_car(Car('TG908', 'Camry', 'Toyota', 'Blue'))
-our_garage.cars_in_garage()
-print(our_garage.remove_car('S1')('5'))
-print(our_garage.spots_available())
+def scenario():
+    while True:
+        new = int(input("\nPlease select from the following options:\n Select 1 to Print Ticket and Enter Garage\n Select 2 to Pay for Parking \n Select 3 to Leave Garage\n"))
+
+        if new == 1:
+            fellsPoint.newTicket()
+        elif new == 2:
+            fellsPoint.pay()
+        elif new == 3:
+            fellsPoint.exitGarage()
+            break
+
+
+fellsPoint = Garage()
+scenario()
