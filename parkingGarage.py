@@ -18,8 +18,8 @@
 
 class Garage:
     def __init__(self):
-        self.tickets = 5
-        self.spots = 5
+        self.tickets = 10
+        self.spots = 10
         self.activeTicket = {"paid": False}
 
 # car enters, takes ticket, one less ticket, one less spot
@@ -56,7 +56,7 @@ class Garage:
             self.spots += 1
             print(
                 f"There are {self.spots} parking spaces available in this garage.")
-
+# if ticket has not been paid
         else:
             while True:
                 exiting = int(input("You still owe $100. Insert $100 and type 100 to confirm."))
@@ -66,7 +66,7 @@ class Garage:
                 else:
                     print("You did not show me the money. You live here now.")
 
-
+#run the code
 def scenario():
     while True:
         new = int(input("\nPlease select from the following options:\n Select 1 to Print Ticket and Enter Garage\n Select 2 to Pay for Parking \n Select 3 to Leave Garage\n"))
@@ -79,6 +79,6 @@ def scenario():
             fellsPoint.exitGarage()
             break
 
-
+#name it
 fellsPoint = Garage()
 scenario()
